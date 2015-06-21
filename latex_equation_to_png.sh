@@ -18,10 +18,17 @@ function random_string {
     cat /dev/urandom | env LC_CTYPE=C tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1
 }
 
-# TODO check if the following programs are available
-# latex
-# dvips 
-# convert
+function check_for_program {
+    if [ -z $(which ${1}) ]; then
+        echo "ERROR: could not find ${1}"
+        exit 1
+    fi
+}
+
+# check if the following programs are available: latex, dvips, convert
+check_for_program "latex"
+check_for_program "dvips"
+check_for_program "convert"
 
 # display help
 if [ "${1}" == "-h" ] || [ "${1}" == "--help" ]; then 
